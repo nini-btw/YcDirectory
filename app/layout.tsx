@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-/* import localFont
+import localFont from "next/font/local";
 const workSans = localFont({
   src: [
     {
-      path: "/fonts/WorkSans-Black.ttf",
+      path: "./fonts/WorkSans-Black.ttf",
       weight: "900",
       style: "normal",
     },
@@ -45,7 +45,7 @@ const workSans = localFont({
     },
   ],
   variable: "--font-work-sans",
-}); */
+});
 
 export const metadata: Metadata = {
   title: "Yc Directory",
@@ -59,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={workSans.variable}>{children}</body>
     </html>
   );
 }
