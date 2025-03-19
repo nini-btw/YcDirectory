@@ -15,9 +15,10 @@ export default async function Home({
       author: { name: "mohammed", _id: 1 },
       _id: 1,
       image:
-        "https://unsplash.com/photos/yellow-and-gray-robot-toy-1DjbGRDh7-E",
+        "https://images.unsplash.com/photo-1634912314704-c646c586b131?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Robots",
       title: "We Robots",
+      description: "this is a description",
     },
   ];
 
