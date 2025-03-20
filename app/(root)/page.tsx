@@ -44,7 +44,10 @@ export default async function Home({
               <StartupCard key={post?._id} post={post} />
             ))
           ) : (
-            <p className="no-result">No Startups Found</p>
+            <>
+              <p className="no-result">No Startups Found</p>
+              <p>test</p>
+            </>
           )}
         </ul>
       </section>

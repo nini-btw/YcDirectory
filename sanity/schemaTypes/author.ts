@@ -8,14 +8,14 @@ export const author = defineType({
   icon: UserIcon,
   fields: [
     defineField({ name: "id", type: "number" }),
-    defineField({ name: "username", type: "number" }),
+    defineField({ name: "username", type: "string" }),
     defineField({ name: "email", type: "string" }),
     defineField({ name: "image", type: "url" }),
     defineField({ name: "bio", type: "text" }),
   ],
   preview: {
     select: {
-      title: "name",
+      title: "username",
     },
   },
 });
