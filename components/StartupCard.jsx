@@ -4,6 +4,9 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import {Startup,Author} from "../sanity/types"
+
+export type StartupCard=Omit<Startup,"author"> &{author?:Author}
 
 const StartupCard = ({ post }) => {
   const {
