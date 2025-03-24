@@ -12,9 +12,12 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  //const posts = await client.fetch(STARTUPS_QUERY);
+  const params = { search: query || null };
 
-  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY });
+  const { data: posts } = await sanityFetch({
+    query: STARTUPS_QUERY,
+    params: params,
+  });
 
   return (
     <>
@@ -40,7 +43,6 @@ export default async function Home({
           ) : (
             <>
               <p className="no-result">No Startups Found</p>
-              <p>test</p>
             </>
           )}
         </ul>
