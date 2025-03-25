@@ -6,33 +6,45 @@ import { Textarea } from "./ui/textarea";
 import MDEditor from "@uiw/react-md-editor";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
-import { title } from "process";
 import { formSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const StartupForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState("Hello World");
-  const handleFormSubmit = async(prevState:any,formData:FormData) => {
-        try{
-            const formValues={
-                title:formData.get("title") as String,
-                description:formData.get("description") as String,
-                category:formData.get("category") as String,
-                link:formData.get("link") as String,
-                pitch
-            }
-            await formSchema.parseAsync(formValues)
-        }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    try {
+      const formValues = {
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        link: formData.get("link") as string,
+        pitch,
+      };
+      await formSchema.parseAsync(formValues);
+      console.log(formValues);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldError = error.flatten().fieldErrors;
+        setErrors(fieldError as unknown as Record<string, string>);
+        return { ...prevState, error: "validation failed", status: "error" };
+      }
+      return {
+        ...prevState,
+        error: "an unexpected error has occurred",
+        status: "error",
+      };
+    }
   };
 
   const [state, action, isPending] = useActionState(handleFormSubmit, {
     error: "",
-    status: "initialu",
+    status: "initial",
   });
   return (
     <>
-      <form action={() => {}} className="startup-form">
+      <form action={action} className="startup-form">
         <div>
           <label htmlFor="title" className="startup-form_label">
             Title
