@@ -5,16 +5,22 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 export const experimental_ppr = true;
+import markdownit from "markdown-it";
+import { Skeleton } from "@/components/ui/skeleton";
+import View from "@/components/View";
+
+const md = markdownit();
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
   const post = await client.fetch(STARTUPS_BY_ID_QUERY, { id });
 
+  const parsedContent = md.render(post?.pitch || "");
+
   if (!post) return notFound();
-  console.log(post.author);
   return (
     <>
       <section className="pink_container !min-h-[230px]">
@@ -51,8 +57,21 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="category-tag">{post.category}</p>
           </div>
           <h3 className="text-30-bold">Pitch Details</h3>
+          {parsedContent ? (
+            <article
+              className="prose max-w-4xl font-work-sans brea-all"
+              dangerouslySetInnerHTML={{ __html: parsedContent }}
+            />
+          ) : (
+            <p className="no-result">No details provided</p>
+          )}
         </div>
+        <hr className="divider" />
+        {/* editor selected startups */}
       </section>
+      <Suspense fallback={<Skeleton className="view_skeleton" />}>
+        <View id={id} />
+      </Suspense>
     </>
   );
 };
